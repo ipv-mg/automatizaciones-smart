@@ -1,0 +1,22 @@
+{
+  "name": "automatizaciones",
+  "version": "1.0.0",
+  "description": "Automatizaciones con Playwright y pnpm",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui-chrome": "playwright test --ui --project=chromium",
+    "codegen": "playwright codegen",
+    "show-trace": "playwright show-trace"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^22.19.21",
+    "@types/pg": "^8.20.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "pg": "^8.22.0"
+  }
+}

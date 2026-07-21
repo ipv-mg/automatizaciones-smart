@@ -1,0 +1,49 @@
+# ==========================================
+# 1. Variables de Entorno y Credenciales
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Permitir explícitamente el .env.example por si acaso
+!.env.example
+
+# ==========================================
+# 2. Archivos de Playwright 
+# ==========================================
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# ==========================================
+# 3. Dependencias de Node
+# ==========================================
+node_modules/
+.pnpm-store/
+
+# ==========================================
+# 4. Logs y Cachés de Ejecución
+# ==========================================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
+# ==========================================
+# 5. Archivos del Sistema y del Editor (IDE)
+# ==========================================
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
