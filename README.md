@@ -54,7 +54,7 @@ npx playwright init-agents --loop=vscode
 
 La configuración MCP queda en `.vscode/mcp.json` y el contexto base se usa desde `tests/seed.spec.ts`.
 
-## Generador de docugo
+## Generador de codigo
 
 ```bash
 npx playwright codegen

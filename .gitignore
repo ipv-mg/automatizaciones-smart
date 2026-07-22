@@ -17,6 +17,7 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+specs/solicitud.md
 
 # ==========================================
 # 3. Dependencias de Node
