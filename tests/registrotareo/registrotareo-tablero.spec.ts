@@ -3,7 +3,6 @@ import { tareo } from '../../data/tareoData'; // 📦 Importamos el arreglo de s
 import { LoginPage } from '@pages';
 // 📦 Importamos el arreglo de solicitudes desde el archivo de datos local (datos.ts)
 
-
 // Data-driven testing: Iteramos sobre cada objeto del arreglo para ejecutar el mismo flujo con diferentes datos
 for (const item of tareo) {
     
