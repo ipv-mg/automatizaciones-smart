@@ -5,7 +5,7 @@ const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 
 export const solicitudes = [
   {
-    correo: 'roxana.condori@materiagris.pe',
+    correo: 'angelo.mogollon@materiagris.pe',
     password: defaultPassword,
     fecha: '24 de julio de',
     hora: '16:00',

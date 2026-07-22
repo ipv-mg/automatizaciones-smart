@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { tareo } from '../../data/tareoData';
+import { tareo } from '@data/tareoData';
 import { LoginPage, TareoPage } from '@pages';
 
 for (const item of tareo) {

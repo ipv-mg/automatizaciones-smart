@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { LoginPage, SolicitudHorasPage } from '@pages';
-import { solicitudes } from '../../data/solicitudesData';
+import { solicitudes } from '@data/solicitudesData';
 
 for (const solicitud of solicitudes) {
   test(`Solicitud de permiso para ${solicitud.correo}`, async ({ page }) => {
