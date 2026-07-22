@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/dbFixture';
+import { test, expect } from '../../fixtures/dbFixture';
 
 test.describe('test de conexion a bbdd', () => {
 
