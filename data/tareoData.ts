@@ -6,6 +6,7 @@ const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 export const tareo = [
     {
         correo: 'angelo.mogollon@materiagris.pe',
+        password: defaultPassword,
         fecha: '9/6/2026',
         minutos: '15',
         proyecto: 'PRY - MG (CARLOS)',

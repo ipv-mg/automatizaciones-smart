@@ -1,33 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { tareo } from '../../data/tareoData'; // 📦 Importamos el arreglo de solicitudes desde el archivo de datos local (datos.ts)
+import { LoginPage } from '@pages';
 // 📦 Importamos el arreglo de solicitudes desde el archivo de datos local (datos.ts)
 
 
 // Data-driven testing: Iteramos sobre cada objeto del arreglo para ejecutar el mismo flujo con diferentes datos
 for (const item of tareo) {
     
-    test('Registro individual de tareo', async ({ page }) => {
-    await page.goto('tests/permisos/datos.ts');
-
-        // ⏱️ Configura el tiempo límite del test a 60 segundos (útil si la red o la app están lentas)
+    test('Registro tareo desde tablero', async ({ page }) => {
         test.setTimeout(60000);
 
-        // 🌐 Navegación al Login (aprovecha la baseURL definida en playwright.config.ts)
-        await page.goto('/auth/login'); 
-        await page.waitForTimeout(2000); // Espera técnica para asegurar la carga visual inicial
-        
-        // 🔐 PROCESO DE AUTENTICACIÓN 
-        // Nota: Los datos de login se extraen de variables de entorno globales configuradas vía archivo .env
-        await page.getByRole('textbox', { name: 'Escribe tu correo electrónico' }).click();        
-        await page.getByRole('textbox', { name: 'Escribe tu correo electrónico' }).fill(item.correo || '');
-        await page.getByRole('textbox', { name: 'Escribe tu contraseña' }).click();
-        await page.getByRole('textbox', { name: 'Escribe tu contraseña' }).fill(process.env.DEFAULT_QA_PASSWORD || '');
-        await page.getByRole('button', { name: 'INGRESAR' }).click();
-        
-        // 📝 FORMULARIO: REGISTRO DE SOLICITUD
-        // Manejo de modales/alertas iniciales post-login
-        await page.locator('#cdk-dialog-1').getByRole('button', { name: 'Aceptar' }).click();
-        await page.getByRole('button', { name: 'Aceptar' }).click();
+        const loginPage = new LoginPage(page);
         
         // Ingreso a la sección de registro
         await page.getByRole('button', { name: 'add_circle Registrar actividad' }).click();
