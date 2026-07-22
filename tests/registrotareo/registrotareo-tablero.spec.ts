@@ -12,6 +12,10 @@ for (const item of tareo) {
 
         const loginPage = new LoginPage(page);
         
+        // 1. Iniciar Sesión
+        await loginPage.navegar();
+        await loginPage.iniciarSesion(item.correo, item.password);
+
         // Ingreso a la sección de registro
         await page.getByRole('button', { name: 'add_circle Registrar actividad' }).click();
 
