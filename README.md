@@ -59,3 +59,7 @@ La configuración MCP queda en `.vscode/mcp.json` y el contexto base se usa desd
 ```bash
 npx playwright codegen
 ```
+
+## Criterios de cambios 
+1. Trabajar en su rama propia
+2. Solicitar el merge
