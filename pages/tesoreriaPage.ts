@@ -26,7 +26,7 @@ export class TesoreriaPage {
     this.page = page;
     this.menuBtn = page.getByRole('button', { name: 'menu' });
     this.tesoreriaLink = page.getByRole('link', { name: 'paid Tesorería' });
-    this.personaRadio = page.getByRole('radio', { name: 'person' });
+    this.personaRadio = page.getByRole('radio', { name: 'person' }); 
     this.crearBtn = page.getByRole('button', { name: ' Crear' });
     this.formularioDialog = page.getByRole('dialog', { name: 'Registro de solicitud' });
     this.tipoSolicitudCombo = this.formularioDialog.getByRole('combobox', { name: 'Tipo de solicitud' });
@@ -44,8 +44,16 @@ export class TesoreriaPage {
     await this.tesoreriaLink.click();
   }
 
-  async abrirFormularioGasto() {
-    await this.personaRadio.click();
+async abrirFormularioGasto() {
+    try {
+      // 1. Esperamos hasta 3 segundos a que el botón 'Crear' se vuelva visible (Rol: Colaborador)
+      await this.crearBtn.waitFor({ state: 'visible', timeout: 3000 });
+    } catch {
+      // 2. Si pasan 3 segundos y no apareció, ejecutamos el clic en 'person' (Rol: Persona)
+      await this.personaRadio.click();
+    }
+
+    // 3. Hacemos clic en Crear y validamos el diálogo
     await this.crearBtn.click();
     await expect(this.formularioDialog).toBeVisible();
   }
