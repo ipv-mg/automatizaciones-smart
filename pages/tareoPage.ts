@@ -93,11 +93,11 @@ export class TareoPage {
     // 5. Reset y Selección de Tipo de Horas
     await this.cboRefresh.click();
     await this.cboTipoHoras.click();
-    const optTipoHora = this.page.getByRole('option', { name: item.tipo_hora, exact: true });
+    const optTipoHora = this.page.getByRole('option', { name: item.tipoHora, exact: true });
     await optTipoHora.waitFor({ state: 'visible' });
     await optTipoHora.click({ force: true });
 
-    if (item.tipo_hora !== 'HORARIO REGULAR') {
+    if (item.tipoHora !== 'HORARIO REGULAR') {
       await this.inputHoraInicio.fill(item.hora);
     }
 

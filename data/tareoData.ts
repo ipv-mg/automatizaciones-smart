@@ -3,17 +3,38 @@ dotenv.config();
 
 const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 
-export const tareo = [
+export interface TareoData {
+    correo: string;
+    password: string;
+    fecha: string;
+    minutos: string;
+    proyecto: string;
+    requerimiento: string;
+    categoria: string;
+    tipoHora: string;
+    descripcion: string;
+    hora: string;
+}
+
+export const TipoHora = {
+  REGULAR: "HORARIO REGULAR",
+  COMPENSACION: "COMPENSACION",
+  EXTRA: "EXTRAS",
+  AVANCE: "AVANCE",
+  RECUPERACION: "RECUPERACION",
+} as const;
+
+export const tareo: TareoData[] = [
     {
-        correo: 'angelo.mogollon@materiagris.pe',
+        correo: "angelo.mogollon@materiagris.pe",
         password: defaultPassword,
-        fecha: '9/6/2026',
-        minutos: '15',
-        proyecto: 'PRY - MG (CARLOS)',
-        requerimiento: 'RQ - CAPACITACIONES INTERNAS',
-        categoria: 'ASEGURAMIENTO DE LA CALIDAD',
-        tipo_hora: 'HORARIO REGULAR',
-        descripcion: 'PRUEBAS DE AUTOMATIZACIÓN CON PLAYWRIGHT',
-        hora: '18:01'
+        fecha: "9/6/2026",
+        minutos: "15",
+        proyecto: "PRY - MG (CARLOS)",
+        requerimiento: "RQ - CAPACITACIONES INTERNAS",
+        categoria: "ASEGURAMIENTO DE LA CALIDAD",
+        tipoHora: TipoHora.EXTRA,
+        descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
+        hora: "18:01"
     }
 ];
