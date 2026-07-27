@@ -7,7 +7,7 @@ export const gastosAlimentacion = [
   {
     correo: 'laura.valera@materiagris.pe',
     password: defaultPassword,
-    fecha: '5 de julio de 2026',
+    fecha: '9 de julio de 2026',
     tipoSolicitud: 'GASTO POR ALIMENTACIÓN',
     monto: '1000',
     proyecto: 'PRY - MG (CARLOS)',
@@ -15,4 +15,15 @@ export const gastosAlimentacion = [
     motivo: 'PRUEBAS DE CALIDAD',
     archivoComprobante: 'imagen.jpg',
   },
+  {
+    correo: 'valeria.senas@materiagris.pe',
+    password: defaultPassword,
+    fecha: '9 de julio de 2026',
+    tipoSolicitud: 'GASTO POR ALIMENTACIÓN',
+    monto: '1000',
+    proyecto: 'PRY - MG (CARLOS)',
+    requerimiento: 'RQ - ACTIVIDADES NO',
+    motivo: 'PRUEBAS DE CALIDAD',
+    archivoComprobante: 'imagen.jpg',
+  }
 ];

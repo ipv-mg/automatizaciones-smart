@@ -27,7 +27,7 @@ test('Automatización: Creación de marcas masivas en paralelo', async ({ browse
       try {
         // 2. Login UI aislado por usuario
         await page.goto('https://qa.appsmart.pe/auth/login');
-        await page.getByRole('textbox', { name: 'Escribe tu correo electrónico' }).fill(usuarioTest.email);
+        await page.getByRole('textbox', { name: 'Escribe tu correo electrónico' }).fill(usuarioTest.correo);
         await page.getByRole('textbox', { name: 'Escribe tu contraseña' }).fill(usuarioTest.password || '');
         await page.getByRole('button', { name: 'INGRESAR' }).click();
 
@@ -42,7 +42,7 @@ test('Automatización: Creación de marcas masivas en paralelo', async ({ browse
           throw new Error('No se capturó el token Bearer tras el login.');
         }
 
-        console.log(`\nProcesando: ${usuarioTest.email} (${usuarioTest.dTiempo_Marca.length} marcas)`);
+        console.log(`\nProcesando: ${usuarioTest.correo} (${usuarioTest.dTiempo_Marca.length} marcas)`);
 
         // 4. Iterar sobre las marcas de este usuario en específico
         for (let i = 0; i < usuarioTest.dTiempo_Marca.length; i++) {
@@ -70,9 +70,9 @@ test('Automatización: Creación de marcas masivas en paralelo', async ({ browse
           const responseBody = await response.json();
 
           if (response.status() === 200 && responseBody.isSuccess) {
-            console.log(`  [✓] ${usuarioTest.email} | Marca [${i + 1}/${usuarioTest.dTiempo_Marca.length}] -> ${tiempoActual}`);
+            console.log(`  [✓] ${usuarioTest.correo} | Marca [${i + 1}/${usuarioTest.dTiempo_Marca.length}] -> ${tiempoActual}`);
           } else {
-            console.log(`  [✗] ${usuarioTest.email} | Marca [${i + 1}/${usuarioTest.dTiempo_Marca.length}] falló -> ${responseBody.message || 'Error API'}`);
+            console.log(`  [✗] ${usuarioTest.correo} | Marca [${i + 1}/${usuarioTest.dTiempo_Marca.length}] falló -> ${responseBody.message || 'Error API'}`);
           }
 
           // Intervalo de 5 segundos entre las marcas del mismo usuario
@@ -82,7 +82,7 @@ test('Automatización: Creación de marcas masivas en paralelo', async ({ browse
         }
 
       } catch (error: any) {
-        console.log(`[✗] Error en sesión/procesamiento para: ${usuarioTest.email} -> ${error.message}`);
+        console.log(`[✗] Error en sesión/procesamiento para: ${usuarioTest.correo} -> ${error.message}`);
       } finally {
         // Cierre del contexto individual (elimina cookies/sesión de este usuario)
         await context.close();

@@ -4,7 +4,7 @@ dotenv.config();
 const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 
 export interface UsuarioMarca {
-  email: string;
+  correo: string;
   password?: string;
   nid_usuario: number;
   dFecha_Jornada: string;
@@ -14,7 +14,7 @@ export interface UsuarioMarca {
 
 export const usuarios: UsuarioMarca[] = [
   {
-    email: "ivan.principe@materiagris.pe",
+    correo: "ivan.principe@materiagris.pe",
     password: defaultPassword, 
     nid_usuario: 312,
     dFecha_Jornada: "2026-07-14",
@@ -27,7 +27,7 @@ export const usuarios: UsuarioMarca[] = [
     nMethod: 6,
   },
   {
-    email: "omar.quispe@materiagris.pe",
+    correo: "omar.quispe@materiagris.pe",
     password: defaultPassword, 
     nid_usuario: 243,
     dFecha_Jornada: "2026-07-14",
@@ -38,7 +38,7 @@ export const usuarios: UsuarioMarca[] = [
     nMethod: 6,
   },
   {
-    email: "angelo.mogollon@materiagris.pe",
+    correo: "angelo.mogollon@materiagris.pe",
     password: defaultPassword, 
     nid_usuario: 193,
     dFecha_Jornada: "2026-07-20",
