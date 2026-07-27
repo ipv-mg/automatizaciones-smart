@@ -12,7 +12,8 @@
       "@pages": ["pages/index.ts"],
       "@data/*": ["data/*"],
       "@fixtures/*": ["fixtures/*"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@flows/*": ["flows/*"]
     }
   }
 }
