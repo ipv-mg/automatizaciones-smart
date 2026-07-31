@@ -2,29 +2,19 @@ import { test } from '@playwright/test';
 import { usuarios } from '@data/marcasData';
 import { CrearMarcasFlow } from '@flows/crearMarcasFlow';
 import { MarcasService } from '@services/marcasService';
+import { LoginPage } from '@pages';
 
 
-for (const usuario of usuarios) {
+for(const usuario of usuarios){
 
-  test(
-    `Creación de marcas - ${usuario.correo}`,
-    async ({ browser, request }) => {
+test(`Creación marcas ${usuario.correo}`, async({page,request})=>{
 
+   const login = new LoginPage(page);
+   const flow = new CrearMarcasFlow(new MarcasService(request));
 
-      const marcasService =
-        new MarcasService(request);
-
-
-      const crearMarcasFlow =
-        new CrearMarcasFlow(
-          browser,
-          marcasService
-        );
-
-
-      await crearMarcasFlow.ejecutar(usuario);
-
-    }
-  );
-
+   await login.navegar();
+   await login.iniciarSesion(usuario.correo,usuario.password ?? '');
+   await flow.ejecutar(page,usuario);
+   
+});
 }
