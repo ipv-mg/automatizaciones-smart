@@ -13,7 +13,8 @@
       "@data/*": ["data/*"],
       "@fixtures/*": ["fixtures/*"],
       "@services/*": ["services/*"],
-      "@flows/*": ["flows/*"]
+      "@flows/*": ["flows/*"],
+      "@utils/*": ["utils/*"]
     }
   }
 }

@@ -1,6 +1,7 @@
 # Specs
 
 
+
 # Instrucciones para el dominio de datos y archivos
 1. Identifica las entradas dinámicas del código (correos, fechas, montos, motivos).
 2. Si existe una estructura de datos reutilizable, llámala en el test; de lo contrario, agrégala en `data/` usando variables de `.env` para credenciales
