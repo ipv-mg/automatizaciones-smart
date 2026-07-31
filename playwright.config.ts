@@ -10,6 +10,9 @@ export default defineConfig({
   use: {
     baseURL: process.env.TEST_BASE_URL ?? 'https://qa.appsmart.pe',
     trace: 'on-first-retry',
+    // Otorga permiso de geolocalización a todos los tests
+    permissions: ['geolocation'],
+    geolocation: { latitude: -12.1222, longitude: -77.0305 }
   },
   projects: [
     {

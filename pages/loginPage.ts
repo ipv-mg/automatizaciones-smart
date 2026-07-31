@@ -24,10 +24,5 @@ export class LoginPage {
     await this.passwordInput.fill(pass);
     await this.ingresarBtn.click();
     
-    // Cierre de diálogo posterior al login
-    const primerAceptar = this.page.locator('#cdk-dialog-1').getByRole('button', { name: 'Aceptar' });
-    await primerAceptar.click();
-    const segundoAceptar = this.page.getByRole('button', { name: 'Aceptar' });
-    await segundoAceptar.click();
   }
 }
