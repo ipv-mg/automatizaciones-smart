@@ -14,6 +14,7 @@ export interface TareoData {
     tipoHora: string;
     descripcion: string;
     hora: string;
+    path: number; // 1: card, 2: modulo
 }
 
 export const TipoHora = {
@@ -26,15 +27,16 @@ export const TipoHora = {
 
 export const tareo: TareoData[] = [
     {
-        correo: "angelo.mogollon@materiagris.pe",
+        correo: "ivan.principe@materiagris.pe",
         password: defaultPassword,
-        fecha: "9/6/2026",
-        minutos: "15",
+        fecha: "21/7/2026",
+        minutos: "475",
         proyecto: "PRY - MG (CARLOS)",
         requerimiento: "RQ - CAPACITACIONES INTERNAS",
         categoria: "ASEGURAMIENTO DE LA CALIDAD",
-        tipoHora: TipoHora.EXTRA,
+        tipoHora: TipoHora.REGULAR,
         descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
-        hora: "18:01"
+        hora: "18:01",
+        path: 2
     }
 ];

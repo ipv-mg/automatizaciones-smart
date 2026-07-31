@@ -13,9 +13,16 @@ for (const item of tareo) {
     await loginPage.navegar();
     await loginPage.iniciarSesion(item.correo, item.password);
 
-    // 2. Registrar Tareo
-    await tareoPage.abrirFormularioRegistro();
+    // 2. Path de referencia
+    switch(item.path){
+      case 1: { await tareoPage.abrirFormularioRegistro(); break; }//registro desde card
+      case 2: { await tareoPage.abrirFormularioRegistroDesdeModulo(); break; }//registro desde modulo tareo
+      default: { throw new Error('No se ha indicado un flujo válido' ); } 
+    }
+
+    // 3. LLenar formulario
     await tareoPage.llenarFormulario(item);
     await tareoPage.guardarYEnviar();
+
   });
 }

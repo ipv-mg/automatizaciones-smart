@@ -8,6 +8,7 @@ export class TareoPage {
   readonly btnAgregarActividad: Locator;
   readonly inputMinutos: Locator;
   readonly inputFecha: Locator;
+  readonly lblTiempoDisponible: Locator;
   readonly cboProyecto: Locator;
   readonly cboRequerimiento: Locator;
   readonly cboCategoria: Locator;
@@ -19,6 +20,8 @@ export class TareoPage {
   readonly modalConfirmacion: Locator;
   readonly btnGuardarYSalir: Locator;
   readonly modalExito: Locator;
+  readonly btnMenuIzquierdo: Locator;
+  readonly btnModuloTareo: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -27,6 +30,7 @@ export class TareoPage {
     this.btnAgregarActividad = page.getByRole('button', { name: /agregar actividad/i });
     this.inputMinutos = page.locator('input[placeholder="00"]');
     this.inputFecha = page.locator('input[placeholder="DD/MM/AAAA"]').first();
+    this.lblTiempoDisponible = page.getByText(/^Disp\./);
     this.cboProyecto = page.getByRole('combobox', { name: 'Proyecto' });
     this.cboRequerimiento = page.getByRole('combobox', { name: 'Requerimiento' });
     this.cboCategoria = page.getByRole('combobox', { name: 'Categoría' });
@@ -38,19 +42,29 @@ export class TareoPage {
     this.modalConfirmacion = page.getByRole('heading', { name: '¿Que acción desea realizar?' });
     this.btnGuardarYSalir = page.getByRole('button', { name: 'Guardar y salir' });
     this.modalExito = page.getByRole('heading', { name: '¡Procesado con éxito!' });
+    // pasos para ir al módulo
+    this.btnMenuIzquierdo = page.getByRole('button', { name: 'menu' });
+    this.btnModuloTareo = page.getByRole('link', { name: 'task Tareo' });
   }
 
-  /**
-   * Abre el modal/sección de registro
-   */
+
+  //Abre el formulario desde el card de home
   async abrirFormularioRegistro() {
     await this.btnRegistrarActividadInicial.click();
     await expect(this.btnAgregarActividad).toBeVisible();
   }
 
-  /**
-   * 🟢 MÉTODO QUE FALTABA: Inyecta la fecha directamente en el input del DOM
-   */
+  //Abre el formulario desde el módulo de Tareo
+  async abrirFormularioRegistroDesdeModulo() {
+    await this.btnMenuIzquierdo.click();
+    await this.btnModuloTareo.click();
+    await this.page.waitForURL('**/tareo/lista');
+    await this.btnRegistrarActividadInicial.click();
+    await expect(this.btnAgregarActividad).toBeVisible();
+  }
+
+  
+  //Inyecta la fecha directamente en el input del DOM
   async setFecha(fecha: string) {
     await expect(this.inputFecha).toBeVisible();
     await this.inputFecha.evaluate((input: HTMLInputElement, valor) => {
@@ -60,16 +74,11 @@ export class TareoPage {
     }, fecha);
   }
 
-  /**
-   * Llena todo el formulario de tareo
-   */
-  /**
-   * Llena todo el formulario de tareo
-   */
+
+  //Llena todo el formulario de tareo
   async llenarFormulario(item: any) {
     // 1. Minutos y Fecha
     await this.inputMinutos.fill(item.minutos);
-    await this.setFecha(item.fecha);
 
     // 2. Selección de Proyecto
     await this.cboProyecto.click();
@@ -105,9 +114,7 @@ export class TareoPage {
     await this.inputDescripcion.fill(item.descripcion);
   }
 
-  /**
-   * Agrega la actividad a la lista temporal y procesa el envío final
-   */
+  //Agrega la actividad a la lista temporal y procesa el envío final
   async guardarYEnviar() {
     await this.btnAgregarActividad.click();
 
@@ -118,5 +125,20 @@ export class TareoPage {
     await this.btnGuardarYSalir.click();
 
     await expect(this.modalExito).toBeVisible();
+  }
+ 
+  //Consultar el tiempo disponible
+  async obtenerMinutosDisponibles(): Promise<number> {
+    // Espera a que el sistema recalcule los minutos
+    await expect(this.lblTiempoDisponible).not.toContainText('Disp. 0 mins.');
+
+    const texto = await this.lblTiempoDisponible.innerText();
+    const match = texto.match(/Disp\.\s*(\d+)\s*mins/i);
+
+    if (!match) {
+      throw new Error(`No se pudo leer el tiempo disponible: ${texto}`);
+    }
+
+    return Number(match[1]);
   }
 }
