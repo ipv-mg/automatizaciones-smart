@@ -1,4 +1,8 @@
 import { Page, Locator, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const origin = process.env.ORIGIN || '';
 
 export class LoginPage {
   readonly page: Page;
@@ -16,7 +20,7 @@ export class LoginPage {
   }
 
   async navegar() {
-    await this.page.goto('https://qa.appsmart.pe/auth/login');
+    await this.page.goto(origin);
   }
 
   async iniciarSesion(correo: string, pass: string) {

@@ -14,7 +14,9 @@
       "@fixtures/*": ["fixtures/*"],
       "@services/*": ["services/*"],
       "@flows/*": ["flows/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@repositories/*": ["repositories/*"],
+      "@db/*": ["db/*"]
     }
   }
 }
