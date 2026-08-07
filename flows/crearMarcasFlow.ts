@@ -1,25 +1,27 @@
 import { Page } from '@playwright/test';
 import { MarcasService } from '@services/marcasService';
 import { UsuarioMarca } from '@data/marcasData';
+import { UsuarioRepository } from '@repositories/usuarioRepository';
 
 
 export class CrearMarcasFlow {
 
   constructor(
-    private readonly marcasService: MarcasService
+    private readonly marcasService: MarcasService,
+    private readonly usuarioRepository: UsuarioRepository
   ) {}
 
   async ejecutar(page: Page,usuario: UsuarioMarca) {
 
-    const token =
-      await this.obtenerToken(page);
+    const token = await this.obtenerToken(page);
 
     for(const tiempo of usuario.dTiempo_Marca){
+      const nIdUsuario = await this.usuarioRepository.obtenerIdPorCorreo(usuario.correo);
 
       await this.marcasService.crearMarca(
         token,
         {
-          nId_Usuario: usuario.nid_usuario,
+          nId_Usuario: nIdUsuario,
           dFecha_Jornada: usuario.dFecha_Jornada,
           dTiempo_Marca: tiempo,
           nTypeInterval: 1,
