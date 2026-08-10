@@ -37,7 +37,7 @@ jobs:
             const repo = context.repo.repo;
             const branch = 'main';
 
-            await github.rest.repos.updateBranchProtection({({
+            await github.rest.repos.updateBranchProtection({
               owner,
               repo,
               branch,
