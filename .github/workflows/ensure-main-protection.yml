@@ -11,8 +11,7 @@ jobs:
   protect-main:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      administration: write
+      contents: write     
 
     steps:
       - uses: actions/checkout@v4
