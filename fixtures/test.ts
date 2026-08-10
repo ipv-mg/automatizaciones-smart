@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { pool, cerrarPool } from '@db/database';
-import { UsuarioRepository } from '@repositories/usuarioRepository';
+import { UsuarioRepository } from '@repositories/UsuarioRepository';
 import { Pool } from 'pg';
 
 type DatabaseFixtures = { 

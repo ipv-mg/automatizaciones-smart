@@ -51,3 +51,9 @@ export const regularizacion: RegularizacionMarca[] = [
     tipo: TIPO.EDITAR
   }
 ];
+
+export const regularizacionSuite = {
+    cantidad: 5,
+    fechaInicio: '2026-08-01',
+    fechaFin: '2026-08-31'
+};
