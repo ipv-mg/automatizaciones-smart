@@ -1,5 +1,5 @@
 export * from './loginPage';
-export * from './solicitudHorasPage';
+export * from './solicitudPage';
 export * from './tareoPage';
 // agregar futuros exports
 export * from './tesoreriaPage';
