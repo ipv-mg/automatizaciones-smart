@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Page, Locator, expect } from '@playwright/test';
+import { CalendarComponent } from './components/CalendarComponent';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -8,6 +9,7 @@ const assetsDir = path.join(__dirname, '../data/assets');
 
 export class TesoreriaPage {
   readonly page: Page;
+  private calendar: CalendarComponent;
   readonly menuBtn: Locator;
   readonly tesoreriaLink: Locator;
   readonly personaRadio: Locator;
@@ -24,6 +26,7 @@ export class TesoreriaPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.calendar = new CalendarComponent(page);
     this.menuBtn = page.getByRole('button', { name: 'menu' });
     this.tesoreriaLink = page.getByRole('link', { name: 'paid Tesorería' });
     this.personaRadio = page.getByRole('radio', { name: 'person' }); 
@@ -78,11 +81,7 @@ async abrirFormularioGasto() {
   }
 
   async seleccionarFecha(fecha: string) {
-    await this.formularioDialog.getByRole('button', { name: 'Open calendar' }).click();
-    const calendarioDialog = this.page.getByRole('dialog').filter({
-      has: this.page.getByRole('button', { name: 'Close calendar' }),
-    });
-    await calendarioDialog.getByRole('button', { name: fecha, exact: true }).click();
+    await this.calendar.seleccionarFecha(fecha);
   }
 
   async completarFormularioGastoAlimentacion(datos: {

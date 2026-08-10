@@ -1,7 +1,9 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { CalendarComponent } from './components/CalendarComponent';
 
 export class SolicitudHorasPage {
   readonly page: Page;
+  private calendar: CalendarComponent;
   readonly registrarSolicitudBtn: Locator;
   readonly tipoSolicitudCombo: Locator;
   readonly permisoHorasOption: Locator;
@@ -16,6 +18,7 @@ export class SolicitudHorasPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.calendar = new CalendarComponent(page);
     this.registrarSolicitudBtn = page.getByRole('button', { name: 'add_circle Registrar solicitud', exact: true });
     this.tipoSolicitudCombo = page.getByRole('combobox', { name: 'Tipo de solicitud' });
     this.permisoHorasOption = page.getByRole('option', { name: 'PERMISO POR HORAS' });
@@ -40,7 +43,7 @@ export class SolicitudHorasPage {
   }
 
   async completarDetallesHoras(fecha: string, hora: string, cantidad: string) {
-    await this.page.getByRole('button', { name: fecha }).click();
+    await this.calendar.seleccionarFecha(fecha);
     await this.horaInput.fill(hora);
     await this.cantidadCombo.click();
     await this.page.getByRole('option', { name: cantidad, exact: true }).click();

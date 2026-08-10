@@ -1,7 +1,9 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { CalendarComponent } from './components/CalendarComponent';
 
 export class TareoPage {
   readonly page: Page;
+  private calendar: CalendarComponent;
 
   // Locators
   readonly btnRegistrarActividadInicial: Locator;
@@ -25,6 +27,7 @@ export class TareoPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.calendar = new CalendarComponent(page);
 
     this.btnRegistrarActividadInicial = page.getByRole('button', { name: 'add_circle Registrar actividad' });
     this.btnAgregarActividad = page.getByRole('button', { name: /agregar actividad/i });
@@ -64,20 +67,18 @@ export class TareoPage {
   }
 
   
-  //Inyecta la fecha directamente en el input del DOM
+  //Delega la selección de la fecha al CalendarComponent
   async setFecha(fecha: string) {
     await expect(this.inputFecha).toBeVisible();
-    await this.inputFecha.evaluate((input: HTMLInputElement, valor) => {
-      input.value = valor;
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    }, fecha);
+    await this.inputFecha.click();
+    await this.calendar.seleccionarFecha(fecha);
   }
 
 
   //Llena todo el formulario de tareo
   async llenarFormulario(item: any) {
     // 1. Minutos y Fecha
+    await this.setFecha(item.fecha);
     await this.inputMinutos.fill(item.minutos);
 
     // 2. Selección de Proyecto

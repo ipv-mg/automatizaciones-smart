@@ -1,7 +1,9 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { CalendarComponent } from './components/CalendarComponent';
 
 export class RegularizacionHorasPage {
     readonly page: Page;
+    private calendar: CalendarComponent;
     readonly cardRegularizarBtn: Locator;
     readonly nuevaSolicitudBtn : Locator;
     readonly nuevaMarcacionBtn : Locator;
@@ -16,6 +18,7 @@ export class RegularizacionHorasPage {
 
     constructor(page: Page){
         this.page = page;
+        this.calendar = new CalendarComponent(page);
         this.cardRegularizarBtn = page.getByRole('button', { name: 'add_circle Regularizar marcas' });
         this.nuevaSolicitudBtn = page.getByRole('button', { name: 'add Nueva Solicitud' });
         this.nuevaMarcacionBtn = page.getByRole('button', { name: 'add Agregar Nueva Marcación' });
@@ -35,7 +38,7 @@ export class RegularizacionHorasPage {
     }
 
     async seleccionarFecha(fecha: string){
-        await this.page.getByRole('button', { name: fecha, exact: true }).click({timeout: 2000});
+        await this.calendar.seleccionarFecha(fecha);
     }
 
     async abrirPanelDerecho(){
