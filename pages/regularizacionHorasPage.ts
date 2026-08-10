@@ -1,10 +1,14 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { CalendarComponent } from './components/CalendarComponent';
 
 export class RegularizacionHorasPage {
     readonly page: Page;
+    private calendar: CalendarComponent;
     readonly cardRegularizarBtn: Locator;
     readonly nuevaSolicitudBtn : Locator;
     readonly nuevaMarcacionBtn : Locator;
+    readonly editarMarcacionBtn : Locator;
+    readonly eliminarMarcacionBtn : Locator;
     readonly horaInput: Locator;
     readonly motivoCombo: Locator;
     readonly textoInput: Locator;
@@ -14,9 +18,12 @@ export class RegularizacionHorasPage {
 
     constructor(page: Page){
         this.page = page;
+        this.calendar = new CalendarComponent(page);
         this.cardRegularizarBtn = page.getByRole('button', { name: 'add_circle Regularizar marcas' });
         this.nuevaSolicitudBtn = page.getByRole('button', { name: 'add Nueva Solicitud' });
         this.nuevaMarcacionBtn = page.getByRole('button', { name: 'add Agregar Nueva Marcación' });
+        this.editarMarcacionBtn = page.getByRole('button', { name: 'edit', exact: true });
+        this.eliminarMarcacionBtn = page.getByRole('button', { name: 'delete', exact: true });
         this.horaInput = page.getByRole('textbox', { name: '--:--' });
         this.motivoCombo = page.getByRole('combobox', { name: 'Motivo de la solicitud' });
         this.textoInput = page.getByRole('textbox', { name: 'Describe el motivo...' });
@@ -31,7 +38,7 @@ export class RegularizacionHorasPage {
     }
 
     async seleccionarFecha(fecha: string){
-        await this.page.getByRole('button', { name: fecha }).click({timeout: 2000});
+        await this.calendar.seleccionarFecha(fecha);
     }
 
     async abrirPanelDerecho(){
@@ -44,31 +51,85 @@ export class RegularizacionHorasPage {
         await this.aceptarBtn.click({timeout: 2000});
     }
 
-    async registrarMarca(hora: string, motivo: string, texto: string){
-        await this.nuevaMarcacionBtn.click();
-        await this.horaInput.fill(hora);
+    async registrarMarca(horaNueva: string[], motivo: string, texto: string){
+        for(const iter of horaNueva){
+            await this.nuevaMarcacionBtn.click({timeout: 3000});
+            await this.horaInput.fill(iter);
+            await this.llenarMotivoYTexto(motivo, texto);
+            await this.agregarAccionBtn.click();
+        }
+    }
+
+async editarMarca(horaActual: string[], horaNueva: string[], motivo: string, texto: string) {
+        try {
+            if (horaActual.length !== horaNueva.length) {
+                throw new Error("La cantidad de horas existentes y nuevas no coincide.");
+            }
+
+            for (const [index, hora] of horaActual.entries()) {
+                const fila = this.obtenerFilaPorHora(hora);
+                await fila.getByRole('button', { name: 'edit', exact: true }).click();
+                await this.horaInput.fill(horaNueva[index]);
+                await this.llenarMotivoYTexto(motivo, texto);
+                await this.agregarAccionBtn.click();
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Error al editar la marca: ${error.message}`);
+            }
+            throw error;
+        }        
+    }
+
+    async eliminarMarca(horaActual: string[], motivo: string, texto: string) {
+        try {
+            for (const hora of horaActual) {
+                const fila = this.obtenerFilaPorHora(hora);
+                await fila.getByRole('button', { name: 'delete', exact: true }).click();
+                await this.llenarMotivoYTexto(motivo, texto);
+                await this.agregarAccionBtn.click();
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Error al eliminar la marca: ${error.message}`);
+            }
+            throw error;
+        }
+    }
+
+    /*
+    Funciones auxiliares del Page
+    */
+
+    private obtenerFilaPorHora(hora: string): Locator {
+        // Encapsula la búsqueda del contenedor exacto de la marca por su hora en tiempo real
+        return this.page.locator('tr, li, [role="row"], div')
+            .filter({ hasText: hora })
+            .filter({ has: this.editarMarcacionBtn.or(this.eliminarMarcacionBtn) })
+            .last();
+    }
+
+    async llenarMotivoYTexto(motivo: string, texto: string) {
         await this.motivoCombo.click();
         await this.page.getByRole('option', { name: motivo }).click();
-
-        const esVisible = await this.textoInput.waitFor({ state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
-        if (esVisible) {
+        
+        // isVisible() evita registrar un "TimeoutError" en rojo dentro del Trace Viewer
+        if (await this.textoInput.isVisible()) {
             await this.textoInput.fill(texto);
+        } else {
+            console.log('El campo de texto no es visible, se omite el llenado del mismo');
         }
-        await this.agregarAccionBtn.click();
     }
 
-    async editarMarca(){
+    async aplicaDiaSiguiente() {
         /*
-        TODO
+        *await page.getByRole('checkbox', { name: 'Aplica para el día siguiente' }).check();
+        *await page.getByRole('checkbox', { name: 'Aplica para el día siguiente' }).uncheck();
         */
     }
-
-    async eliminarMarca(){
-        /*
-        TODO
-        */
-    }
-
 }
+
 
 

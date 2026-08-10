@@ -5,8 +5,7 @@ const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 
 export interface UsuarioMarca {
   correo: string;
-  password?: string;
-  nid_usuario: number;
+  password: string;
   dFecha_Jornada: string;
   dTiempo_Marca: string[];
   nMethod: number;
@@ -14,15 +13,11 @@ export interface UsuarioMarca {
 
 export const usuarios: UsuarioMarca[] = [
   {
-    correo: "ivan.principe@materiagris.pe",
+    correo: "christian.romero@materiagris.pe",
     password: defaultPassword, 
-    nid_usuario: 312,
-    dFecha_Jornada: "2026-07-21",
+    dFecha_Jornada: "2026-08-03",
     dTiempo_Marca: [
-      "2026-07-21T09:00:00",
-      "2026-07-21T13:00:00",
-      "2026-07-21T13:45:00",
-      "2026-07-21T18:00:00"
+      "2026-08-03T19:00:00"
     ],
     nMethod: 6,
   }

@@ -9,12 +9,14 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "@pages": ["pages/index.ts"],
-      "@data/*": ["data/*"],
-      "@fixtures/*": ["fixtures/*"],
-      "@services/*": ["services/*"],
-      "@flows/*": ["flows/*"],
-      "@utils/*": ["utils/*"]
+      "@pages": ["./pages/index.ts"],
+      "@data/*": ["./data/*"],
+      "@fixtures/*": ["./fixtures/*"],
+      "@services/*": ["./services/*"],
+      "@flows/*": ["./flows/*"],
+      "@utils/*": ["./utils/*"],
+      "@repositories/*": ["./repositories/*"],
+      "@db/*": ["./db/*"]
     }
   }
 }

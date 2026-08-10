@@ -4,7 +4,7 @@ import { regularizacion } from '@data/regularizacionData';
 
 for (const solicitud of regularizacion) {
   test(`Solicitud de regularizacion de marca para ${solicitud.correo}`, async ({ page }) => {
-    test.setTimeout(30000);
+    test.setTimeout(60000);
 
     // Inicializamos las páginas POM
     const loginPage = new LoginPage(page);
@@ -21,11 +21,20 @@ for (const solicitud of regularizacion) {
     await regularizacionHorasPage.seleccionarFecha(solicitud.fecha);
     await regularizacionHorasPage.abrirPanelDerecho(); 
     
-    // 4. Registrar solicitud y enviar
-    for (const iter of solicitud.hora ){
-        await regularizacionHorasPage.registrarMarca(iter, solicitud.motivo, solicitud.texto);
+    // 4. Accion de solicitud y enviar
+    switch (solicitud.tipo) {
+      case "REGISTRAR":
+        await regularizacionHorasPage.registrarMarca(solicitud.horaNueva, solicitud.motivo, solicitud.texto);
+        await regularizacionHorasPage.enviarSolicitud(solicitud.horaNueva.length);
+        break;
+      case "EDITAR":
+        await regularizacionHorasPage.editarMarca(solicitud.horaActual, solicitud.horaNueva, solicitud.motivo, solicitud.texto);
+        await regularizacionHorasPage.enviarSolicitud(solicitud.horaNueva.length);
+        break;
+      case "ELIMINAR":
+        await regularizacionHorasPage.eliminarMarca(solicitud.horaEliminar, solicitud.motivo, solicitud.texto);
+        await regularizacionHorasPage.enviarSolicitud(solicitud.horaEliminar.length);
+        break;
     }
-    
-    await regularizacionHorasPage.enviarSolicitud(solicitud.hora.length);
   });
 }

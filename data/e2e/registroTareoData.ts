@@ -9,14 +9,10 @@ export interface RegistroTareoE2E {
 export const escenariosRegistroTareo: RegistroTareoE2E[] =
   tareo.map((registro): RegistroTareoE2E => {
 
-    const marca = usuarios.find(
-      usuario => usuario.correo === registro.correo
-    );
+    const marca = usuarios.find(usuario => usuario.correo === registro.correo);
 
     if (!marca) {
-      throw new Error(
-        `No existe información de marcas para el usuario ${registro.correo}`
-      );
+      throw new Error(`No existe información de marcas para el usuario ${registro.correo}`);
     }
 
     return {

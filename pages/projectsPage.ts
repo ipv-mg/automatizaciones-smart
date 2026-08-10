@@ -1,9 +1,11 @@
 import { Page, Locator } from '@playwright/test';
 import path from 'path';
 import { ProjectFormData } from '@data/projectsData';
+import { CalendarComponent } from './components/CalendarComponent';
 
 export class ProjectsPage {
   readonly page: Page;
+  private calendar: CalendarComponent;
 
   // Navegación
   readonly btnMenu: Locator;
@@ -19,8 +21,6 @@ export class ProjectsPage {
   readonly comboColaboradores: Locator;
   readonly comboServicio: Locator;
   readonly comboLideres: Locator;
-  readonly btnOpenCalendar: Locator;
-  readonly btnNextMonth: Locator;
   readonly inputDescripcion: Locator;
 
   // Confirmación
@@ -29,6 +29,7 @@ export class ProjectsPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.calendar = new CalendarComponent(page);
 
     // Navegación
     this.btnMenu = page.getByRole('button', { name: 'menu' });
@@ -44,8 +45,6 @@ export class ProjectsPage {
     this.comboColaboradores = page.getByRole('combobox', { name: 'Colaboradores' });
     this.comboServicio = page.getByRole('combobox', { name: 'Servicio' });
     this.comboLideres = page.getByRole('combobox', { name: 'Líderes' });
-    this.btnOpenCalendar = page.getByRole('button', { name: 'Open calendar' });
-    this.btnNextMonth = page.getByRole('button', { name: 'Next month' });
     this.inputDescripcion = page.getByRole('textbox', { name: 'Ingresa la descripción del' });
 
     // Botones
@@ -94,10 +93,8 @@ export class ProjectsPage {
     await this.seleccionarCombo(this.comboLideres, data.liderNombre);
 
     // 5. Fechas y Descripción
-    await this.btnOpenCalendar.click();
-    await this.page.getByRole('button', { name: data.fechaInicioText, exact: true }).click();
-    await this.btnNextMonth.click();
-    await this.page.getByRole('button', { name: data.fechaFinText }).click();
+    await this.calendar.seleccionarFecha(data.fechaInicioText);
+    await this.calendar.seleccionarFecha(data.fechaFinText);
     await this.inputDescripcion.fill(data.descripcion);
 
     // 6. Guardar

@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 4 : undefined,
   reporter: 'html',
   use: {
-    baseURL: process.env.TEST_BASE_URL ?? 'https://qa.appsmart.pe',
+    baseURL: process.env.TEST_BASE_URL,
     trace: 'on-first-retry',
     // Otorga permiso de geolocalización a todos los tests
     permissions: ['geolocation'],
