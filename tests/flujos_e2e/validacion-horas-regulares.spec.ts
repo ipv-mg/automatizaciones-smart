@@ -5,6 +5,9 @@ import { LoginPage, TareoPage } from '@pages';
 import { MarcasService } from '@services/marcasService';
 
 for (const escenario of escenariosRegistroTareo) {
+  if (!escenario.marca) {
+    throw new Error(`No existe información de marcas para el usuario ${escenario.tareo.correo}`);
+  }
 
   test(
     `Registro tareo E2E ${escenario.marca.correo}`,async ({ page, request, usuarioRepository }) => {

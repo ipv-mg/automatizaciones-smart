@@ -13,11 +13,15 @@ export interface UsuarioMarca {
 
 export const usuarios: UsuarioMarca[] = [
   {
-    correo: "christian.romero@materiagris.pe",
+    correo: "ivan.principe@materiagris.pe",
     password: defaultPassword, 
-    dFecha_Jornada: "2026-08-03",
+    dFecha_Jornada: "2026-08-12",
     dTiempo_Marca: [
-      "2026-08-03T19:00:00"
+      "2026-08-12T09:14:00",
+            "2026-08-12T13:00:00",
+                  "2026-08-12T14:00:00",
+                        "2026-08-12T20:00:00"
+
     ],
     nMethod: 6,
   }
