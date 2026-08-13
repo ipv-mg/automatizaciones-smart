@@ -16,7 +16,8 @@
       "@flows/*": ["./flows/*"],
       "@utils/*": ["./utils/*"],
       "@repositories/*": ["./repositories/*"],
-      "@db/*": ["./db/*"]
+      "@db/*": ["./db/*"],
+      "@components/*": ["./pages/components/*"],
     }
   }
 }
