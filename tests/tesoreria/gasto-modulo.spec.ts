@@ -7,46 +7,32 @@ test.describe('Tesorería - Solicitudes de reembolso', () => {
     test(`Registrar solicitud - ${datos.tipoSolicitud.trim()} - ${datos.motivo}`, async ({ page }) => {
       const loginPage = new LoginPage(page);
       const tesoreria = new TesoreriaPage(page);
-
+      
       await loginPage.navegar();
       await loginPage.iniciarSesion(datos.correo, datos.password);
       await tesoreria.navegarDesdeHome();
-
+      
       switch (datos.tipoSolicitud) {
         case TIPO.ALIMENTACION:
-          await tesoreria.llenarGastoAlimentacion(
-            datos.fecha,
-            datos.monto,
-            datos.proyecto!,
-            datos.requerimiento!,
-            datos.personaSeleccionada!,
-            datos.motivo,
-          );
-          break;
-
         case TIPO.MOVILIDAD:
-          await tesoreria.llenarGastoMovilidad(
+        case TIPO.OTROS_GASTOS:
+          await tesoreria.llenarGasto(
+            datos.tipoSolicitud,
             datos.fecha,
             datos.monto,
-            datos.proyecto!,
-            datos.requerimiento!,
             datos.motivo,
+            datos.personaSeleccionada,
+            datos.proyecto,
+            datos.requerimiento,
           );
           break;
 
         case TIPO.COCHERAS:
-          await tesoreria.llenarDevolucionCocheras(datos.fecha, datos.monto, datos.motivo);
-          break;
-
-        case TIPO.OTROS_GASTOS:
-          await tesoreria.llenarOtrosGastos(
-            datos.fecha,
-            datos.monto,
-            datos.proyecto!,
-            datos.requerimiento!,
-            datos.personaSeleccionada!,
-            datos.motivo,
-          );
+          await tesoreria.llenarGasto(
+            datos.tipoSolicitud,
+            datos.fecha, 
+            datos.monto, 
+            datos.motivo);
           break;
 
         default:
