@@ -15,8 +15,6 @@ export const TIPO = {
   OTROS_GASTOS: 'local_atm OTROS GASTOS',
 } as const;
 
-export type TipoSolicitud = (typeof TIPO)[keyof typeof TIPO];
-
 /**
  * Estructura de una solicitud del módulo de Tesorería.
  * `proyecto`, `requerimiento` y `personaSeleccionada` son opcionales porque
@@ -27,7 +25,7 @@ export interface SolicitudReembolso {
   correo: string;
   password: string;
   fecha: string;
-  tipoSolicitud: TipoSolicitud;
+  tipoSolicitud: string;
   monto: string;
   proyecto?: string;
   requerimiento?: string;
@@ -52,37 +50,5 @@ export const solicitudesReembolso: SolicitudReembolso[] = [
     personaSeleccionada: ['MENDOZA MARQUINA KIMBERLY'],
     motivo: 'AUTOMATIZACION DE TESORERIA PWRIGHT',
     archivoComprobante: 'imagen.jpg',
-  },
-  {
-    correo: 'ivan.principe@materiagris.pe',
-    password: defaultPassword,
-    fecha: '3 de agosto de 2026',
-    tipoSolicitud: TIPO.MOVILIDAD,
-    monto: '10000',
-    proyecto: 'PRY - MG (CARLOS)',
-    requerimiento: 'RQ - ACTIVIDADES NO',
-    motivo: 'PRUEBAS DE AUTOMATIZACION TESORERIA',
-    archivoComprobante: 'imagen.jpg',
-  },
-  {
-    correo: 'jaime.barbieri@materiagris.pe',
-    password: defaultPassword,
-    fecha: '3 de agosto de 2026',
-    tipoSolicitud: TIPO.COCHERAS,
-    monto: '1000',
-    motivo: 'AUTOMATIZACIONES PLAYWRIGHT',
-    archivoComprobante: 'imagen.jpg',
-  },
-  {
-    correo: 'daniel.granados@materiagris.pe',
-    password: defaultPassword,
-    fecha: '3 de agosto de 2026',
-    tipoSolicitud: TIPO.OTROS_GASTOS,
-    monto: '10000',
-    proyecto: 'PRY - MG (CARLOS)',
-    requerimiento: 'RQ - ACTIVIDADES NO',
-    personaSeleccionada: ['DURAND FLORES CARLOS ENRIQUE'],
-    motivo: 'AUTOMATIZACIONES DE PLAYWRIGHT',
-    archivoComprobante: 'imagen.jpg',
-  },
+  }
 ];

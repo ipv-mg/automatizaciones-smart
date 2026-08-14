@@ -1,7 +1,6 @@
 import { Page, Locator } from '@playwright/test';
-import path from 'path';
 import { ProjectFormData } from '@data/projectsData';
-import { CalendarComponent } from './components/CalendarComponent';
+import { CalendarComponent } from '@components';
 
 export class ProjectsPage {
   readonly page: Page;

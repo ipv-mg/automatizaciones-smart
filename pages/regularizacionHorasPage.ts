@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { CalendarComponent } from './components/CalendarComponent';
+import { CalendarComponent } from '@components';
 
 export class RegularizacionHorasPage {
     readonly page: Page;

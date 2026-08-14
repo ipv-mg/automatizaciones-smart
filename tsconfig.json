@@ -17,7 +17,8 @@
       "@utils/*": ["./utils/*"],
       "@repositories/*": ["./repositories/*"],
       "@db/*": ["./db/*"],
-      "@components/*": ["./pages/components/*"],
+      "@components": ["./pages/components/index.ts"],
+      "@components/*": ["./pages/components/*"]
     }
   }
 }
