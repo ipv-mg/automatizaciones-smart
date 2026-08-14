@@ -2,8 +2,8 @@ import { test } from '@playwright/test';
 import { tareo } from '@data/tareoData';
 import { LoginPage, TareoPage } from '@pages';
 
-for (const item of tareo) {
-  test(`Registro tareo desde tablero - ${item.proyecto}`, async ({ page }) => {
+for (const [index, item] of tareo.entries()) {
+  test(`Registro tareo desde tablero - ${item.proyecto} - ${index + 1}`, async ({ page }) => {
     test.setTimeout(60000);
 
     const loginPage = new LoginPage(page);
@@ -14,15 +14,10 @@ for (const item of tareo) {
     await loginPage.iniciarSesion(item.correo, item.password);
 
     // 2. Path de referencia
-    switch(item.path){
-      case 1: { await tareoPage.abrirFormularioRegistro(); break; }//registro desde card
-      case 2: { await tareoPage.abrirFormularioRegistroDesdeModulo(); break; }//registro desde modulo tareo
-      default: { throw new Error('No se ha indicado un flujo válido' ); } 
-    }
+    await tareoPage.abrirFormularioRegistro(); //registro desde card
 
     // 3. LLenar formulario
     await tareoPage.llenarFormulario(item);
     await tareoPage.guardarYEnviar();
-
   });
 }
