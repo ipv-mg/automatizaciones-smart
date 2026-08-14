@@ -26,29 +26,37 @@ export class CalendarComponent {
    * Navega y hace clic en una fecha específica dentro del calendario.
    * Método privado helper para reutilizar en selecciones simples o rangos.
    */
-  private async seleccionarUnaFecha(fechaInput: string): Promise<void> {
+  private async seleccionarUnaFecha(fechaInput: string, fechaReferencia: Date = new Date()): Promise<Date> {
     const fechaObjetivo = parseDate(fechaInput);
-    
     let nombreBoton = fechaInput;
+
     if (!isNaN(fechaObjetivo.getTime()) && fechaInput.includes('/')) {
       nombreBoton = formatAriaLabelDate(fechaObjetivo);
     }
 
-    // 1. Verificar si la fecha ya es visible
-    let btnFechaDirecta = this.page.getByRole('button', { name: nombreBoton, exact: true });
-    
+    let btnFechaDirecta = this.page.getByRole('button', {
+      name: nombreBoton,
+      exact: true,
+    });
+
     if (!(await btnFechaDirecta.isVisible())) {
-      btnFechaDirecta = this.page.getByRole('button', { name: new RegExp('^' + nombreBoton) }).first();
-    }
-    
-    if (await btnFechaDirecta.isVisible()) {
-      await btnFechaDirecta.click({ timeout: 2000 });
-      return;
+      btnFechaDirecta = this.page
+        .getByRole('button', {
+          name: new RegExp('^' + nombreBoton),
+        })
+        .first();
     }
 
-    // 3. Navegar en los meses si aplica
+    if (await btnFechaDirecta.isVisible()) {
+      await btnFechaDirecta.click({ timeout: 2000 });
+      return fechaObjetivo;
+    }
+
     if (!isNaN(fechaObjetivo.getTime())) {
-      const diffMeses = calcularDiferenciaMeses(fechaObjetivo);
+      const diffMeses = calcularDiferenciaMeses(
+        fechaObjetivo,
+        fechaReferencia
+      );
 
       if (diffMeses > 0) {
         for (let i = 0; i < diffMeses; i++) {
@@ -61,8 +69,23 @@ export class CalendarComponent {
       }
     }
 
-    // 4. Clic en el día
+    // Obtener nuevamente el botón después de cambiar de mes
+    btnFechaDirecta = this.page.getByRole('button', {
+      name: nombreBoton,
+      exact: true,
+    });
+
+    if (!(await btnFechaDirecta.isVisible())) {
+      btnFechaDirecta = this.page
+        .getByRole('button', {
+          name: new RegExp('^' + nombreBoton),
+        })
+        .first();
+    }
+
     await btnFechaDirecta.click();
+
+    return fechaObjetivo;
   }
 
   /**
@@ -71,13 +94,13 @@ export class CalendarComponent {
    * @param fechaHasta (Opcional) Fecha de fin si se trata de un rango de fechas.
    */
   async seleccionarFecha(fechaDesde: string, fechaHasta?: string): Promise<void> {
-    // Seleccionar la fecha de inicio (o fecha única)
-    await this.abrirCalendario();
-    await this.seleccionarUnaFecha(fechaDesde);
 
-    // Si se envió la segunda fecha, seleccionarla a continuación
+    await this.abrirCalendario();
+    const fechaDesdeObjetivo = await this.seleccionarUnaFecha(fechaDesde);
+
     if (fechaHasta) {
-      await this.seleccionarUnaFecha(fechaHasta);
+      await this.seleccionarUnaFecha(fechaHasta,fechaDesdeObjetivo);
     }
+
   }
 }
