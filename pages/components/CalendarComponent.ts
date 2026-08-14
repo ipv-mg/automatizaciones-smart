@@ -32,6 +32,7 @@ export class CalendarComponent {
 
     if (!isNaN(fechaObjetivo.getTime()) && fechaInput.includes('/')) {
       nombreBoton = formatAriaLabelDate(fechaObjetivo);
+      nombreBoton = formatAriaLabelDate(fechaObjetivo);
     }
 
     let btnFechaDirecta = this.page.getByRole('button', {

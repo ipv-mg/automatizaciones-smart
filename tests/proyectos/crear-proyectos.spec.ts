@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ProjectsPage, LoginPage } from '@pages';
-import { projectsData } from '@data/projectsData';
+import { projectsData } from '@data/proyectosData';
 
 test.describe('Módulo de Proyectos y Servicios', () => {
   test('Debe crear un nuevo proyecto exitosamente', async ({ page }) => {
