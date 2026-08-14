@@ -74,6 +74,15 @@ export class TareoPage {
     await this.calendar.seleccionarFecha(fecha);
   }
 
+  //Funcion para llenado de tipoHora
+  async setTipoHora(tipoHora: string) {
+    await this.cboRefresh.click();
+    await this.cboTipoHoras.click();
+    const optTipoHora = this.page.getByRole('option', { name: tipoHora, exact: true });
+    await optTipoHora.waitFor({ state: 'visible' });
+    await optTipoHora.click({ force: true });
+
+  }
 
   //Llena todo el formulario de tareo
   async llenarFormulario(item: any) {
@@ -101,11 +110,7 @@ export class TareoPage {
     await optCategoria.click({ force: true });
 
     // 5. Reset y Selección de Tipo de Horas
-    await this.cboRefresh.click();
-    await this.cboTipoHoras.click();
-    const optTipoHora = this.page.getByRole('option', { name: item.tipoHora, exact: true });
-    await optTipoHora.waitFor({ state: 'visible' });
-    await optTipoHora.click({ force: true });
+    await this.setTipoHora(item.tipoHora);
 
     if (item.tipoHora !== 'HORARIO REGULAR') {
       await this.inputHoraInicio.fill(item.hora);
@@ -131,7 +136,7 @@ export class TareoPage {
   //Consultar el tiempo disponible
   async obtenerMinutosDisponibles(): Promise<number> {
     // Espera a que el sistema recalcule los minutos
-    await expect(this.lblTiempoDisponible).not.toContainText('Disp. 0 mins.');
+    await expect(this.lblTiempoDisponible).not.toContainText('Disp. 0 mins. ( 0 hrs).');
 
     const texto = await this.lblTiempoDisponible.innerText();
     const match = texto.match(/Disp\.\s*(\d+)\s*mins/i);

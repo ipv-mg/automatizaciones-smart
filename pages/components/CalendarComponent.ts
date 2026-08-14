@@ -66,6 +66,6 @@ export class CalendarComponent {
     }
 
     // Finalmente, hacer clic en la fecha
-    await btnFechaDirecta.click();
+    await btnFechaDirecta.click({ timeout: 2000});
   }
 }

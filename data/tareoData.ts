@@ -7,14 +7,14 @@ export interface TareoData {
     correo: string;
     password: string;
     fecha: string;
-    minutos: string;
+    minutosRegulares: string;
+    minutosNoRegulares?: string;
     proyecto: string;
     requerimiento: string;
     categoria: string;
     tipoHora: string;
     descripcion: string;
     hora: string;
-    path: number; // 1: card, 2: modulo
 }
 
 export const TipoHora = {
@@ -27,16 +27,28 @@ export const TipoHora = {
 
 export const tareo: TareoData[] = [
     {
-        correo: "ivan.principe@materiagris.pe",
+        correo: "julio.julca@materiagris.pe",
         password: defaultPassword,
-        fecha: "21/7/2026",
-        minutos: "475",
+        fecha: "11 de agosto de 2026",
+        minutosRegulares: "475",
+        minutosNoRegulares: "120",
         proyecto: "PRY - MG (CARLOS)",
         requerimiento: "RQ - CAPACITACIONES INTERNAS",
         categoria: "ASEGURAMIENTO DE LA CALIDAD",
         tipoHora: TipoHora.REGULAR,
         descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
-        hora: "18:01",
-        path: 2
+        hora: "18:01"
+    },
+    {
+        correo: "omar.quispe@materiagris.pe",
+        password: defaultPassword,
+        fecha: "11 de agosto de 2026",
+        minutosRegulares: "475",
+        proyecto: "PRY - MG (CARLOS)",
+        requerimiento: "RQ - CAPACITACIONES INTERNAS",
+        categoria: "ASEGURAMIENTO DE LA CALIDAD",
+        tipoHora: TipoHora.REGULAR,
+        descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
+        hora: "18:01"
     }
 ];
