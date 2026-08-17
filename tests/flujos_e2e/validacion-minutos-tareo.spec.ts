@@ -37,8 +37,8 @@ for (const escenario of escenariosRegistroTareo) {
       /**
        * Se abre el modulo de tareo, el formulario y se ingresa la fecha, HORAS REGULARES se toman por defecto
        */
-      await tareoPage.abrirFormularioRegistroDesdeModulo(); //registro desde modulo tareo
-      await tareoPage.setFecha(escenario.tareo.fecha);
+      await tareoPage.abrirFormularioRegistro(); //registro desde modulo tareo
+      await tareoPage.setFecha(escenario.tareo.fecha[0]);
       
       /**
        * Validaciones en los tiempos disponibles segun las marcas
