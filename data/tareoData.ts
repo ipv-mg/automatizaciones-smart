@@ -6,15 +6,23 @@ const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 export interface TareoData {
     correo: string;
     password: string;
-    fecha: string;
+    fecha: string[];
+    fechaInicio: string;
+    fechaFin?: string;
     minutosRegulares: string;
-    minutosNoRegulares?: string;
+    minutosNoRegulares?: string
     proyecto: string;
     requerimiento: string;
     categoria: string;
     tipoHora: string;
     descripcion: string;
     hora: string;
+    id?: number[];
+}
+
+export interface TareoEliminado {
+    fecha: string;
+    horas: string;
 }
 
 export const TipoHora = {
@@ -27,28 +35,34 @@ export const TipoHora = {
 
 export const tareo: TareoData[] = [
     {
-        correo: "julio.julca@materiagris.pe",
+        correo: "angelo.mogollon@materiagris.pe",
         password: defaultPassword,
-        fecha: "11 de agosto de 2026",
-        minutosRegulares: "475",
-        minutosNoRegulares: "120",
+        fecha: ['8 de julio de 2026'],
+        fechaInicio: '1 de julio de 2026',
+        minutosRegulares: "15",
         proyecto: "PRY - MG (CARLOS)",
         requerimiento: "RQ - CAPACITACIONES INTERNAS",
         categoria: "ASEGURAMIENTO DE LA CALIDAD",
         tipoHora: TipoHora.REGULAR,
         descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
-        hora: "18:01"
-    },
+        hora: "18:01",
+    }
+];
+
+export const edicion: TareoData[] = [
     {
-        correo: "omar.quispe@materiagris.pe",
+        correo: "angelo.mogollon@materiagris.pe",
         password: defaultPassword,
-        fecha: "11 de agosto de 2026",
-        minutosRegulares: "475",
+        fecha: ['14 de julio de 2026'],
+        fechaInicio: '1 de julio de 2026',
+        fechaFin: '30 de julio de 2026',
+        minutosRegulares: "15",
         proyecto: "PRY - MG (CARLOS)",
         requerimiento: "RQ - CAPACITACIONES INTERNAS",
         categoria: "ASEGURAMIENTO DE LA CALIDAD",
         tipoHora: TipoHora.REGULAR,
-        descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
-        hora: "18:01"
+        descripcion: "PRUEBAS DE AUTOMATIZACIÓN PARA EDITAR",
+        hora: "18:01",
+        id: [217449] 
     }
 ];

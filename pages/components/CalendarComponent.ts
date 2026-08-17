@@ -30,7 +30,7 @@ export class CalendarComponent {
     const fechaObjetivo = parseDate(fechaInput);
     let nombreBoton = fechaInput;
 
-    if (!isNaN(fechaObjetivo.getTime()) && fechaInput.includes('/')) {
+    if (!isNaN(fechaObjetivo.getTime())) {
       nombreBoton = formatAriaLabelDate(fechaObjetivo);
     }
 
