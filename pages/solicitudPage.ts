@@ -1,17 +1,18 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Page, Locator, expect } from '@playwright/test';
+import { CalendarComponent } from '@components';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const assetsDir = path.join(__dirname, '../data/assets');
 export class SolicitudPage {
   readonly page: Page;
+  readonly calendar: CalendarComponent;
 
   // Modales y Controles Generales
   readonly registrarSolicitudBtn: Locator;
   readonly tipoSolicitudCombo: Locator;
-  readonly radioTodos: Locator;
   readonly btnCerrarModal: Locator;
   readonly aceptarBtn: Locator;
   readonly enviarBtn: Locator;
@@ -32,11 +33,10 @@ export class SolicitudPage {
 
   constructor(page: Page) {
     this.page = page;
-
+    this.calendar = new CalendarComponent(page);
     // Botones y Selectores base
     this.registrarSolicitudBtn = page.getByRole('button', { name: 'add_circle Registrar solicitud', exact: true });
     this.tipoSolicitudCombo = page.getByRole('combobox', { name: 'Tipo de solicitud' });
-    this.radioTodos = page.getByRole('radio', { name: 'TODOS' });
     this.btnCerrarModal = page.getByRole('button', { name: 'close' });
     this.aceptarBtn = page.getByRole('button', { name: 'Aceptar' });
     this.enviarBtn = page.getByRole('button', { name: 'Enviar' });
@@ -59,19 +59,20 @@ export class SolicitudPage {
   /**
    * Abre el modal de creación y selecciona el tipo de solicitud.
    */
-  async abrirFormulario(filtro: string, tipoSolicitud: string): Promise<void> {
+  async abrirFormulario(tipoSolicitud: string): Promise<void> {
     await this.registrarSolicitudBtn.click();
-    await this.aplicarFiltroTodos(filtro);
+    await expect(this.tipoSolicitudCombo).toBeEnabled();
     await this.tipoSolicitudCombo.click();
-    await this.page.getByRole('option', { name: tipoSolicitud, exact: true }).click();
+    await this.page.getByRole('option', { name: tipoSolicitud }).click();
   }
 
   /**
    * Aplica el filtro radio "TODOS" y cierra el modal auxiliar si aplica (flujo por días)
    */
-  async aplicarFiltroTodos(filtro:string): Promise<void> {
-    if (await this.radioTodos.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await this.radioTodos.click();
+  async aplicarFiltroTodos(filtro: string): Promise<void> {
+    const btnRadioTodos = this.page.getByRole('radio', { name: filtro })
+    if (await btnRadioTodos.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await btnRadioTodos.click();
       if (await this.btnCerrarModal.isVisible({ timeout: 2000 }).catch(() => false)) {
         await this.btnCerrarModal.click();
       }
@@ -95,7 +96,7 @@ export class SolicitudPage {
    * Completa la fecha, hora e intervalo para solicitudes por horas.
    */
   async completarDetallesHoras(fecha: string, hora: string, cantidad: string): Promise<void> {
-    await this.page.getByRole('button', { name: fecha }).click();
+    await this.calendar.seleccionarFecha(fecha);
     await this.horaInput.fill(hora);
     await this.cantidadCombo.click();
     await this.page.getByRole('option', { name: cantidad, exact: true }).click();
@@ -105,10 +106,10 @@ export class SolicitudPage {
    * Completa fecha y cantidad para solicitudes por días.
    */
   async completarDetallesDias(fecha: string, cantidad: string): Promise<void> {
-    await this.page.getByRole('button', { name: fecha }).click();
+    await this.calendar.seleccionarFecha(fecha);
     if (await this.cantidadCombo.isVisible({ timeout: 2000 }).catch(() => false)) {
       await this.cantidadCombo.click();
-      await this.page.getByRole('option', { name: cantidad, exact: true }).click();
+      await this.page.getByRole('option', { name: cantidad }).click();
     }
   }
 
@@ -154,7 +155,7 @@ export class SolicitudPage {
   /**
    * Confirma el envío del formulario.
    */
-  async enviarSolicitud(): Promise<void> {
+  async enviarSolicitud() {
     await this.enviarBtn.click();
     await expect(this.aceptarBtn).toBeVisible();
     await this.aceptarBtn.click();

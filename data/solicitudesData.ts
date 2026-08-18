@@ -3,72 +3,66 @@ dotenv.config();
 
 const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 
+export interface Solicitud{
+  correo: string,
+  password: string,
+  fecha: string,
+  hora: string,
+  cantidadHoras?: string,
+  cantidadDias?: string,
+  responsable: string,
+  motivo: string,
+  descripcion: string,
+  tipoSolicitud: string,
+  filtroRadio: string,
+  colaboradorNombre: string,
+  motivoDetalle: string,
+  archivoAdjunto: string,
+} 
+
+export const TipoSolicitud = {
+  HORAS: 'PERMISO POR HORAS',
+  DIAS: 'PERMISO POR DÍAS',
+}
+
+export const FiltroRadio = {
+  TODOS: 'TODOS',
+}
+
+export const Motivo = {
+  PERSONALES: 'MOTIVOS PERSONALES'
+}
+
 export const solicitudes = [
   {
     correo: 'roxana.condori@materiagris.pe',
     password: defaultPassword,
-    fecha: '20 de agosto de 2026',
+    fecha: '28 de agosto de 2026',
     hora: '16:00',
-    cantidad: '2 HORAS',
-    cantidadDias: '1 DÍA',
+    cantidadHoras: '2 HORAS',
     responsable: 'DURAND FLORES CARLOS ENRIQUE',
-    motivo: 'MOTIVOS PERSONALES',
+    motivo: Motivo.PERSONALES,
     descripcion: 'pruebas de calidad',
-    tipoSolicitud: 'PERMISO POR HORAS',
-    filtroRadio: 'TODOS',
+    tipoSolicitud: TipoSolicitud.HORAS,
+    filtroRadio: FiltroRadio.TODOS,
     colaboradorNombre: 'QUISPE APON OMAR GABRIEL ANDRE',
-    motivoDetalle: 'mptivos personales',
+    motivoDetalle: 'motivos personales',
     archivoAdjunto: 'imagen.jpg'
 
   },
   {
     correo: 'omar.quispe@materiagris.pe',
     password: defaultPassword,
-    fecha: '20 de agosto de 2026',
+    fecha: '24 de agosto de 2026',
     hora: '16:00',
-    cantidad: '2 HORAS',
     cantidadDias: '1 DÍA',
     responsable: 'DURAND FLORES CARLOS ENRIQUE',
-    motivo: 'MOTIVOS PERSONALES',
+    motivo: Motivo.PERSONALES,
     descripcion: 'pruebas de calidad',
-    tipoSolicitud: 'PERMISO POR HORAS',
-    filtroRadio: 'TODOS',
+    tipoSolicitud: TipoSolicitud.DIAS,
+    filtroRadio: FiltroRadio.TODOS,
     colaboradorNombre: 'QUISPE APON OMAR GABRIEL ANDRE',
-    motivoDetalle: 'mptivos personales',
-    archivoAdjunto: 'imagen.jpg'
-
-  },
-  {
-    correo: 'angelo.mogollon@materiagris.pe',
-    password: defaultPassword,
-    fecha: '20 de agosto de 2026',
-    hora: '16:00',
-    cantidad: '2 HORAS',
-    cantidadDias: '1 DÍA',
-    responsable: 'DURAND FLORES CARLOS ENRIQUE',
-    motivo: 'MOTIVOS PERSONALES',
-    descripcion: 'pruebas de calidad',
-    tipoSolicitud: 'PERMISO POR DÍAS',    
-    filtroRadio: 'TODOS',
-    colaboradorNombre: 'QUISPE APON OMAR GABRIEL ANDRE',
-    motivoDetalle: 'mptivos personales',
-    archivoAdjunto: 'imagen.jpg'
-
-  },
-  {
-    correo: 'abraham.chevarria@materiagris.pe',
-    password: defaultPassword,
-    fecha: '20 de agosto de 2026',
-    hora: '16:00',
-    cantidad: '2 HORAS',
-    cantidadDias: '1 DÍA',
-    tipoSolicitud: 'PERMISO POR DÍAS',
-    responsable: 'DURAND FLORES CARLOS ENRIQUE',
-    motivo: 'MOTIVOS PERSONALES',
-    descripcion: 'pruebas de calidad',        
-    filtroRadio: 'TODOS',
-    colaboradorNombre: 'QUISPE APON OMAR GABRIEL ANDRE',
-    motivoDetalle: 'mptivos personales',
+    motivoDetalle: 'motivos personales',
     archivoAdjunto: 'imagen.jpg'
 
   }
