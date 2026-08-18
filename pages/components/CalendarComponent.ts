@@ -1,5 +1,7 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { calcularDiferenciaMeses, parseDate, formatAriaLabelDate } from '../../utils/dateUtils';
+import { error } from 'console';
+import { NetworkResources } from 'inspector/promises';
 
 export class CalendarComponent {
   readonly page: Page;
@@ -48,7 +50,8 @@ export class CalendarComponent {
     }
 
     if (await btnFechaDirecta.isVisible()) {
-      await btnFechaDirecta.click({ timeout: 2000 });
+      await expect(btnFechaDirecta).toBeEnabled();
+      await btnFechaDirecta.click();
       return fechaObjetivo;
     }
 
@@ -82,9 +85,9 @@ export class CalendarComponent {
         })
         .first();
     }
-
+    
+    await expect(btnFechaDirecta).toBeEnabled();
     await btnFechaDirecta.click();
-
     return fechaObjetivo;
   }
 
