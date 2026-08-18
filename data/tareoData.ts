@@ -53,7 +53,7 @@ export const edicion: TareoData[] = [
     {
         correo: "angelo.mogollon@materiagris.pe",
         password: defaultPassword,
-        fecha: ['14 de julio de 2026'],
+        fecha: ['8 de julio de 2026'],
         fechaInicio: '1 de julio de 2026',
         fechaFin: '30 de julio de 2026',
         minutosRegulares: "15",
@@ -63,6 +63,6 @@ export const edicion: TareoData[] = [
         tipoHora: TipoHora.REGULAR,
         descripcion: "PRUEBAS DE AUTOMATIZACIÓN PARA EDITAR",
         hora: "18:01",
-        id: [217449] 
+        id: [217566]
     }
 ];
