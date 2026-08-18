@@ -13,11 +13,11 @@ for (const item of edicion) {
     await loginPage.navegar();
     await loginPage.iniciarSesion(item.correo, item.password);
 
-    // 2. navegar al modulo y filtrar
+    // 2. Navegar al módulo y filtrar
     await tareoPage.navegarModulo();
     await tareoPage.filtroCalendario(item.fechaInicio, item.fechaFin);
-    // 3. LLenar formulario
-    await tareoPage.editarTareo(item.fecha, item);
 
+    // 3. Ejecutar el bucle de edición pasando el objeto item
+    await tareoPage.editarTareo(item);
   });
 }

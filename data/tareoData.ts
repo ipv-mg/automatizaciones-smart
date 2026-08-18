@@ -55,14 +55,14 @@ export const edicion: TareoData[] = [
         password: defaultPassword,
         fecha: ['8 de julio de 2026'],
         fechaInicio: '1 de julio de 2026',
-        fechaFin: '30 de julio de 2026',
+        fechaFin: '31 de julio de 2026',
         minutosRegulares: "15",
         proyecto: "PRY - MG (CARLOS)",
         requerimiento: "RQ - CAPACITACIONES INTERNAS",
         categoria: "ASEGURAMIENTO DE LA CALIDAD",
         tipoHora: TipoHora.REGULAR,
-        descripcion: "PRUEBAS DE AUTOMATIZACIÓN PARA EDITAR",
+        descripcion: "PRUEBAS DE AUTOMATIZACIÓN DE EDICIÓN EN QA",
         hora: "18:01",
-        id: [217566]
+        id: [217569,217570,217571]
     }
 ];

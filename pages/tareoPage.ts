@@ -192,10 +192,44 @@ export class TareoPage {
     await this.btnAceptar.click();
   }
 
+  async editarTareo(item: TareoData) {
+    if (!item.id || item.id.length === 0) {
+      throw new Error('No se encontraron IDs en el objeto de datos para realizar la edición.');
+    }
+
+    // El bucle se ejecuta tantas veces como IDs existan en el array item.id
+    for (let index = 0; index < item.id.length; index++) {
+      const idActual = item.id[index];
+      // Obtiene la fecha del índice actual, o usa la primera fecha como fallback
+      const fechaDato = item.fecha[index] ?? item.fecha[0];
+
+      // 1. Ubicar la fila por su ID y hacer clic en su botón de editar
+      const fila = this.recuperarFila(idActual);
+      await fila
+        .locator('td.cdk-column-icEditarTarea, td.cdk-column-icEdit')
+        .locator('div.cursor-pointer, button, span')
+        .filter({ hasText: /edit/i })
+        .first()
+        .click();
+
+      // 2. Esperar a que el formulario esté listo en pantalla
+      await expect(this.cboRequerimiento).toBeVisible();
+
+      // 3. Llenar el formulario con la información del ítem
+      await this.llenarFormulario(fechaDato, item);
+
+      // 4. Guardar los cambios
+      await this.btnGuardar.click();
+
+      // Breve pausa para asegurar la recarga o actualización de la tabla tras guardar
+      await this.page.waitForTimeout(1000);
+    }
+  }
+
   /**
    * Edita tareos buscando la fila específica según el ID numérico suministrado
    */
-  async editarTareo(fecha: string[], item: TareoData) {
+  /*nc editarTareo(fecha: string[], item: TareoData) {
     for (const [index, fechaDato] of fecha.entries()) {
       const idActual = item.id?.[index];
 
@@ -210,7 +244,7 @@ export class TareoPage {
       await this.llenarFormulario(fechaDato, item);
       await this.btnGuardar.click();
     }
-  }
+  }*/
 
   async eliminarTareo(id: number[]): Promise<TareoEliminado[]> {
     const datosEliminados: TareoEliminado[] = [];
