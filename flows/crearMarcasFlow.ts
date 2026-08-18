@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import { MarcasService } from '@services/marcasService';
 import { UsuarioMarca } from '@data/marcasData';
-import { UsuarioRepository } from '@repositories/usuarioRepository';
+import { UsuarioRepository } from '@repositories/UsuarioRepository';
 
 
 export class CrearMarcasFlow {

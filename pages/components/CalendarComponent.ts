@@ -14,46 +14,50 @@ export class CalendarComponent {
     this.btnPreviousMonth = page.getByRole('button', { name: 'Previous month' });
   }
 
-  /**
-   * Selecciona una fecha en el calendario.
-   * Si la fecha no está visible, abre el calendario y navega hasta el mes correspondiente.
-   * @param fechaInput La fecha en el formato esperado por el calendario (ej: '5', '12', o el aria-label como '05/08/2023' dependiendo de la UI)
-   */
-  async seleccionarFecha(fechaInput: string): Promise<void> {
-    const fechaObjetivo = parseDate(fechaInput);
-    
-    // Tratamos de armar el nombre del botón de manera inteligente
-    // Si la fecha input es "DD/MM/YYYY", Angular Material usa "D de mes de YYYY" en el aria-label.
-    // Si ya era un string como "31 de agosto de", lo usamos como fallback.
-    let nombreBoton = fechaInput;
-    if (!isNaN(fechaObjetivo.getTime()) && fechaInput.includes('/')) {
-        nombreBoton = formatAriaLabelDate(fechaObjetivo);
-    }
 
-    // 1. Intentamos buscar si la fecha ya está visible
-    let btnFechaDirecta = this.page.getByRole('button', { name: nombreBoton, exact: true });
-    
-    // Si no se encuentra con exact: true (ej. porque el input venía truncado "31 de agosto de"), 
-    // intentamos buscar usando expresión regular que inicie con ese texto para evitar que "9" haga match con "19" o "29"
-    if (!(await btnFechaDirecta.isVisible())) {
-      btnFechaDirecta = this.page.getByRole('button', { name: new RegExp('^' + nombreBoton) }).first();
-    }
-    
-    if (await btnFechaDirecta.isVisible()) {
-      await btnFechaDirecta.click({ timeout: 2000 });
-      return;
-    }
-
-    // 2. Si no es visible, intentamos abrir el calendario
+  async abrirCalendario() {
+    // 2. Si no es visible, intentar abrir el calendario (si existe botón)
     if (await this.btnOpenCalendar.isVisible()) {
       await this.btnOpenCalendar.click();
     }
+  }
 
-    // 3. Calculamos la diferencia de meses
+  /**
+   * Navega y hace clic en una fecha específica dentro del calendario.
+   * Método privado helper para reutilizar en selecciones simples o rangos.
+   */
+  private async seleccionarUnaFecha(fechaInput: string, fechaReferencia: Date = new Date()): Promise<Date> {
+    const fechaObjetivo = parseDate(fechaInput);
+    let nombreBoton = fechaInput;
+
     if (!isNaN(fechaObjetivo.getTime())) {
-      const diffMeses = calcularDiferenciaMeses(fechaObjetivo);
+      nombreBoton = formatAriaLabelDate(fechaObjetivo);
+    }
 
-      // Navegar
+    let btnFechaDirecta = this.page.getByRole('button', {
+      name: nombreBoton,
+      exact: true,
+    });
+
+    if (!(await btnFechaDirecta.isVisible())) {
+      btnFechaDirecta = this.page
+        .getByRole('button', {
+          name: new RegExp('^' + nombreBoton),
+        })
+        .first();
+    }
+
+    if (await btnFechaDirecta.isVisible()) {
+      await btnFechaDirecta.click({ timeout: 2000 });
+      return fechaObjetivo;
+    }
+
+    if (!isNaN(fechaObjetivo.getTime())) {
+      const diffMeses = calcularDiferenciaMeses(
+        fechaObjetivo,
+        fechaReferencia
+      );
+
       if (diffMeses > 0) {
         for (let i = 0; i < diffMeses; i++) {
           await this.btnNextMonth.click();
@@ -65,7 +69,38 @@ export class CalendarComponent {
       }
     }
 
-    // Finalmente, hacer clic en la fecha
+    // Obtener nuevamente el botón después de cambiar de mes
+    btnFechaDirecta = this.page.getByRole('button', {
+      name: nombreBoton,
+      exact: true,
+    });
+
+    if (!(await btnFechaDirecta.isVisible())) {
+      btnFechaDirecta = this.page
+        .getByRole('button', {
+          name: new RegExp('^' + nombreBoton),
+        })
+        .first();
+    }
+
     await btnFechaDirecta.click();
+
+    return fechaObjetivo;
+  }
+
+  /**
+   * Selecciona una fecha única o un rango de fechas (Desde - Hasta).
+   * @param fechaDesde Fecha única o fecha de inicio en formato 'DD/MM/YYYY' o similar.
+   * @param fechaHasta (Opcional) Fecha de fin si se trata de un rango de fechas.
+   */
+  async seleccionarFecha(fechaDesde: string, fechaHasta?: string): Promise<void> {
+
+    await this.abrirCalendario();
+    const fechaDesdeObjetivo = await this.seleccionarUnaFecha(fechaDesde);
+
+    if (fechaHasta) {
+      await this.seleccionarUnaFecha(fechaHasta,fechaDesdeObjetivo);
+    }
+
   }
 }

@@ -1,7 +1,6 @@
-import { Page, Locator } from '@playwright/test';
-import path from 'path';
+import { Page, Locator, expect } from '@playwright/test';
 import { ProjectFormData } from '@data/projectsData';
-import { CalendarComponent } from './components/CalendarComponent';
+import { CalendarComponent } from '@components';
 
 export class ProjectsPage {
   readonly page: Page;
@@ -93,12 +92,12 @@ export class ProjectsPage {
     await this.seleccionarCombo(this.comboLideres, data.liderNombre);
 
     // 5. Fechas y Descripción
-    await this.calendar.seleccionarFecha(data.fechaInicioText);
-    await this.calendar.seleccionarFecha(data.fechaFinText);
+    await this.calendar.seleccionarFecha(data.fechaInicioText,data.fechaFinText);
     await this.inputDescripcion.fill(data.descripcion);
 
     // 6. Guardar
     await this.btnGuardar.click();
+    await expect(this.btnAceptar).toBeVisible();   
     await this.btnAceptar.click();
   }
 

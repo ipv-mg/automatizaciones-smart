@@ -6,15 +6,23 @@ const defaultPassword = process.env.DEFAULT_QA_PASSWORD || '';
 export interface TareoData {
     correo: string;
     password: string;
-    fecha: string;
-    minutos: string;
+    fecha: string[];
+    fechaInicio: string;
+    fechaFin?: string;
+    minutosRegulares: string;
+    minutosNoRegulares?: string
     proyecto: string;
     requerimiento: string;
     categoria: string;
     tipoHora: string;
     descripcion: string;
     hora: string;
-    path: number; // 1: card, 2: modulo
+    id?: number[];
+}
+
+export interface TareoEliminado {
+    fecha: string;
+    horas: string;
 }
 
 export const TipoHora = {
@@ -27,16 +35,34 @@ export const TipoHora = {
 
 export const tareo: TareoData[] = [
     {
-        correo: "ivan.principe@materiagris.pe",
+        correo: "angelo.mogollon@materiagris.pe",
         password: defaultPassword,
-        fecha: "21/7/2026",
-        minutos: "475",
+        fecha: ['8 de julio de 2026'],
+        fechaInicio: '1 de julio de 2026',
+        minutosRegulares: "15",
         proyecto: "PRY - MG (CARLOS)",
         requerimiento: "RQ - CAPACITACIONES INTERNAS",
         categoria: "ASEGURAMIENTO DE LA CALIDAD",
         tipoHora: TipoHora.REGULAR,
         descripcion: "PRUEBAS DE AUTOMATIZACIÓN",
         hora: "18:01",
-        path: 2
+    }
+];
+
+export const edicion: TareoData[] = [
+    {
+        correo: "angelo.mogollon@materiagris.pe",
+        password: defaultPassword,
+        fecha: ['14 de julio de 2026'],
+        fechaInicio: '1 de julio de 2026',
+        fechaFin: '30 de julio de 2026',
+        minutosRegulares: "15",
+        proyecto: "PRY - MG (CARLOS)",
+        requerimiento: "RQ - CAPACITACIONES INTERNAS",
+        categoria: "ASEGURAMIENTO DE LA CALIDAD",
+        tipoHora: TipoHora.REGULAR,
+        descripcion: "PRUEBAS DE AUTOMATIZACIÓN PARA EDITAR",
+        hora: "18:01",
+        id: [217449] 
     }
 ];

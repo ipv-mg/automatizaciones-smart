@@ -16,7 +16,9 @@
       "@flows/*": ["./flows/*"],
       "@utils/*": ["./utils/*"],
       "@repositories/*": ["./repositories/*"],
-      "@db/*": ["./db/*"]
+      "@db/*": ["./db/*"],
+      "@components": ["./pages/components/index.ts"],
+      "@components/*": ["./pages/components/*"]
     }
   }
 }
