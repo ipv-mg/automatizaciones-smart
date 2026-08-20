@@ -17,7 +17,7 @@ for (const [index, item] of tareo.entries()) {
     await tareoPage.abrirFormularioRegistro(); //registro desde card
 
     // 3. LLenar formulario
-    await tareoPage.llenarFormulario(item);
+    await tareoPage.llenarFormulario(item.fecha[0], item);
     await tareoPage.guardarYEnviar();
   });
 }

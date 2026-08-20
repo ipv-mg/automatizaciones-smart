@@ -24,9 +24,9 @@ export const projectsData: ProjectFormData = {
   correo: "ivan.principe@materiagris.pe",
   password: defaultPassword, 
   tipo: 'PRY',
-  nombreProyecto:  'PRUEBA DE AUTOMATIZACIÓN 34',
+  nombreProyecto:  'PRUEBA DE AUTOMATIZACIÓN 4666',
   coordinador: 'DURAND FLORES CARLOS (MATERIA GRIS S.A.C)',
-  nombreCliente:  'AUTOMATIZACIONES Mg 35',
+  nombreCliente:  'AUTOMATIZACIONES Mg 3555',
   acceso: 'PÚBLICO',
   colaboradores: [
     'MOGOLLON SEÑAS ANGELO SAY',
